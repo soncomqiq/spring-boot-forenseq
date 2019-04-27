@@ -52,9 +52,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		http.authorizeRequests()
-				.antMatchers("/", "/numberofperson", "/logout", "/getallxkit", "/getallykit", "/getallautosomalkit",
-						"/api/resource/hetero", "/getlocuslist", "/getstatsgraphinfo/**/**", "/findpersonbylocus",
-						"/api/search/excelfile", "/getlocusautosomalkit/**", "/getlocusxkit/**", "/getlocusykit/**")
+				.antMatchers("/", "/api/resources/person/numberofperson", "/logout", "/api/resources/getallxkit",
+						"/api/resources/getallykit", "/api/resources/getallautosomalkit", "/api/resources/hetero",
+						"/api/resources/getlocuslist", "/api/resources/getstatsgraphinfo/**/**",
+						"/api/resources/findpersonbylocus", "/api/file/**",
+						"/api/resources/getlocusautosomalkit/**", "/api/resources/getlocusxkit/**",
+						"/api/resources/getlocusykit/**")
 				.permitAll();
 
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

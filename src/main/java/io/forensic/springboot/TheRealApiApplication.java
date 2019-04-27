@@ -12,7 +12,6 @@ import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 
 import io.forensic.springboot.property.FileStorageProperties;
 
-@SpringBootApplication
 @EnableConfigurationProperties({
     FileStorageProperties.class
 })
@@ -21,6 +20,7 @@ import io.forensic.springboot.property.FileStorageProperties;
 		Jsr310JpaConverters.class
 })
 
+@SpringBootApplication
 public class TheRealApiApplication {
 
 	@PostConstruct

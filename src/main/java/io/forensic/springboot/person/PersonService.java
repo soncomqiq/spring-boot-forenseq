@@ -18,19 +18,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class PersonService {
-	
+
 	@Autowired
 	private PersonRepository personRepository;
-	
-	public List<Person> getAllTopics(){
-		//return topics;
+
+	public List<Person> getAllPersons() {
+		// return topics;
 		List<Person> persons = new ArrayList<>();
-		personRepository.findAll()
-		.forEach(persons::add);
+		personRepository.findAll().forEach(persons::add);
 		return persons;
 	}
-	
-	public void readExcelData(String fileName) {		
+
+	public void readExcelData(String fileName) {
 		try {
 			// Create the input stream from the xlsx/xls file
 			FileInputStream fis = new FileInputStream(fileName);
@@ -47,14 +46,13 @@ public class PersonService {
 			int numberOfSheets = workbook.getNumberOfSheets();
 			String sampleYear = null; // Collect sample_year
 			String sampleId = null; // Collect sample_id
-			
+
 			// loop through each of the sheets
 			for (int i = 0; i < numberOfSheets; i++) {
-				
+
 				// Get the nth sheet from the workbook
 				Sheet sheet = workbook.getSheetAt(i);
-				
-				
+
 				// First Sheet : AutosomalKit STRs
 				if (sheet.getSheetName().equals("Autosomal STRs")) {
 //					System.out.println("This is AutosomalKit STRs");
@@ -67,10 +65,9 @@ public class PersonService {
 						Row row = rowIterator.next();
 						// Every row has columns, get the column iterator and iterate over them
 						Iterator<Cell> cellIterator = row.cellIterator();
-						
-						
+
 						// Line 1 to 7
-						if(line>=1 && line<= 7) {
+						if (line >= 1 && line <= 7) {
 							List<String> data = new ArrayList<>();
 							while (cellIterator.hasNext()) {
 								// Get the Cell object
@@ -82,25 +79,26 @@ public class PersonService {
 //									System.out.print(cell.getStringCellValue() + ",");
 									break;
 								case Cell.CELL_TYPE_NUMERIC:
-									data.add(""+cell.getNumericCellValue());
+									data.add("" + cell.getNumericCellValue());
 //									System.out.print(cell.getNumericCellValue() + ",");
 								}
 							} // end of cell iterator
-							if(data.get(0).equals("Created")) {
+							if (data.get(0).equals("Created")) {
 								String[] tmp = data.get(1).split(" ");
 								sampleYear = tmp[2];
 							}
-							if(data.get(0).equals("Sample")) {
+							if (data.get(0).equals("Sample")) {
 								sampleId = data.get(1);
 							}
 						}
-						
+
 						// End of Line 7 Save Person Entity
-						if(line==8) {
-							Person tmpPerson = new Person(new PersonIdentity(sampleYear,sampleId),"null","null","null","null","null",0,"null");
+						if (line == 8) {
+							Person tmpPerson = new Person(new PersonIdentity(sampleYear, sampleId), "null", "null",
+									"null", "null", "null", "null", "null", 0, "null");
 							personRepository.save(tmpPerson);
 						}
-						
+
 						line += 1; // Counting Line (Add 1/Loop)
 //						System.out.println();
 					} // end of rows iterator
@@ -117,14 +115,14 @@ public class PersonService {
 
 		// return countriesList;
 	}
-	
+
 	public Optional<Person> getPerson(PersonIdentity id) {
-		//return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+		// return topics.stream().filter(t -> t.getId().equals(id)).findFirst().get();
 		return personRepository.findById(id);
 	}
 
 	public void addPerson(Person person) {
-		//topics.add(topic);
+		// topics.add(topic);
 		personRepository.save(person);
 	}
 

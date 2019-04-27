@@ -1,9 +1,12 @@
 package io.forensic.springboot.Other;
 
+import io.forensic.springboot.login.*;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class Controller {
+@RequestMapping("/api/resources")
+public class OtherController {
 
 	@Autowired
 	private OtherService service;
@@ -26,6 +30,12 @@ public class Controller {
 	@CrossOrigin()
 	public List<String> getLocusAutosomalKit(@PathVariable String kit) {
 		return service.getLocusAutosomalKit(kit);
+	}
+	
+	@RequestMapping("/statisticmap/{allele}")
+	@CrossOrigin()
+	public List<MapStats> getStatisticMap(@PathVariable String allele) {
+		return service.getStatisticMap(allele);
 	}
 
 	@RequestMapping("/getallykit")
@@ -52,7 +62,7 @@ public class Controller {
 		return service.getLocusXKit(kit);
 	}
 	
-	@RequestMapping("/api/resource/hetero")
+	@RequestMapping("/hetero")
 	@CrossOrigin()
 	public List<Hetero> getHetero() {
 		return service.getHetero();
@@ -67,6 +77,17 @@ public class Controller {
 		locusList.setyLocus(service.getAllLocusY());
 		return locusList;
 	}
+	
+	@RequestMapping("/locuslist")
+	public List<RequestLocus> getLocusListAlign() {
+		return service.getLocusListAlign();
+	}
+	
+	@RequestMapping("/alleleinfo")
+	@CrossOrigin()
+	public List<RequestLocus> getAlleleInfoAlign() {
+		return service.getAlleleInfoAlign();
+	}
 
 	@RequestMapping("/getstatsgraphinfo/{table}/{locus}")
 	@CrossOrigin()
@@ -80,4 +101,17 @@ public class Controller {
 		return service.getPersonByLocus(locus);
 	}
 	
+	@RequestMapping(value = "/alignment", method = RequestMethod.POST)
+	@CrossOrigin()
+	public List<Alignment> getAligenment(@RequestBody RequestLocus body) {
+//		System.out.println("body.getLocus()::"+body.getLocus');
+		return service.getAlignment(body.getLocus(), body.getAllele());
+	}
+	
+	@RequestMapping(value = "/isnpstat", method = RequestMethod.GET)
+	@CrossOrigin()
+	public List<iSNPRespone> getISNPStat() {
+//		System.out.println("body.getLocus()::"+body.getLocus');
+		return service.findISNPStat();
+	}
 }

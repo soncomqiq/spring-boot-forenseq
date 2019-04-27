@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequestMapping("/api/resources/person")
 public class PersonController {
 	
 	@Autowired
@@ -33,14 +34,9 @@ public class PersonController {
 	}
 	
 	@RequestMapping("/persons")
-	public List<Person> getAllTopic() {
-		return personService.getAllTopics();
+	public List<Person> getAllPersons() {
+		return personService.getAllPersons();
 	}
-	
-//	@RequestMapping("/persons/sample_year={id}&&sample_id={sid}")
-//	public Person getTopic(@PathVariable String id,@PathVariable String sid) {
-//		return personService.getPerson(new PersonIdentity(id,sid));
-//	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/persons")
 	public void addTopic(@RequestBody Person person) {

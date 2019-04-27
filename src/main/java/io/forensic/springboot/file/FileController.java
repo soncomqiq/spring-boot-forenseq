@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import io.forensic.springboot.Other.OtherService;
 
 @RestController
+@RequestMapping("/api/file")
 public class FileController {
 
     private static final Logger logger = LoggerFactory.getLogger(FileController.class);
@@ -29,7 +30,7 @@ public class FileController {
         return "success";
     }
     
-    @PostMapping("/api/search/excelfile")
+    @PostMapping("/search/excelfile")
     @CrossOrigin()
     public List<Object[]> searchByExcel(@RequestParam("file") MultipartFile file){
     	fileStorageService.storeFile(file);

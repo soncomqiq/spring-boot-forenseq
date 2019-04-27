@@ -119,14 +119,13 @@ public class iSNPsService {
 				if (sheet.getSheetName().equals("iSNPs")) {
 					Iterator<Row> rowIterator = sheet.iterator();
 					// Tracking Current Line
+					Map<String, String> locus = new HashMap<String, String>();
 					int line = 1;
 					while (rowIterator.hasNext()) {
 						// Get the row object
 						Row row = rowIterator.next();
 						// Every row has columns, get the column iterator and iterate over them
 						Iterator<Cell> cellIterator = row.cellIterator();
-						Map<String, String> locus = new HashMap<String, String>();
-
 						// Line 14 to 41 Collect CE_Data of iSNPs
 						if (line >= 13 && line <= 106) {
 							List<String> data = new ArrayList<>();
@@ -177,9 +176,11 @@ public class iSNPsService {
 //							System.out.println("data.get(1)::" + data.get(1));
 //							System.out.println("data.get(2)::" + data.get(2));
 //							System.out.println("data.get(3)::" + data.get(3));
-							iSNPsRepository
-									.save(new iSNPs(new iSNPsIdentity(sampleYear, sampleId, data.get(0), data.get(1)),
-											data.get(2), locus.get(data.get(0)), data.get(3)));
+							if (data.get(2).equals("Yes")) {
+								iSNPsRepository.save(
+										new iSNPs(new iSNPsIdentity(sampleYear, sampleId, data.get(0), data.get(1)),
+												data.get(2), locus.get(data.get(0)), data.get(3)));
+							}
 						}
 						line += 1; // Counting Line (Add 1/Loop)
 					} // end of rows iterator

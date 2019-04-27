@@ -14,26 +14,30 @@ public class Person {
 	private String PID;
 	private String name;
 	private String surname;
-	private String Gender;
-	private String Region;
-	private int Age;
-	private String Race;
+	private String gender;
+	private String region;
+	private String province;
+	private String country;
+	private int age;
+	private String race;
 	
 	public Person() {
 		
 	}
-	
-	public Person(PersonIdentity id, String pID, String name, String surname, String gender, String region, int age,
-			String race) {
+
+	public Person(PersonIdentity id, String pID, String name, String surname, String gender, String region,
+			String province, String country, int age, String race) {
 		super();
 		this.id = id;
-		this.PID = pID;
+		PID = pID;
 		this.name = name;
 		this.surname = surname;
-		this.Gender = gender;
-		this.Region = region;
-		this.Age = age;
-		this.Race = race;
+		this.gender = gender;
+		this.region = region;
+		this.province = province;
+		this.country = country;
+		this.age = age;
+		this.race = race;
 	}
 
 	public PersonIdentity getId() {
@@ -69,35 +73,50 @@ public class Person {
 	}
 
 	public String getGender() {
-		return Gender;
+		return gender;
 	}
 
 	public void setGender(String gender) {
-		Gender = gender;
+		this.gender = gender;
 	}
 
 	public String getRegion() {
-		return Region;
+		return region;
 	}
 
 	public void setRegion(String region) {
-		Region = region;
+		this.region = region;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
 	public int getAge() {
-		return Age;
+		return age;
 	}
 
 	public void setAge(int age) {
-		Age = age;
+		this.age = age;
 	}
 
 	public String getRace() {
-		return Race;
+		return race;
 	}
 
 	public void setRace(String race) {
-		Race = race;
+		this.race = race;
 	}
-	
 }

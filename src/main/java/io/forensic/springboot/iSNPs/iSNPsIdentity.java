@@ -3,14 +3,11 @@ package io.forensic.springboot.iSNPs;
 import java.io.Serializable;
 
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-//Implementing Serializable for using this class as a key
-@Embeddable
-public class iSNPsIdentity implements Serializable{
-
+public class iSNPsIdentity implements Serializable {
+	
 	@NotNull
 	@Size(max=20)
 	@Column(name = "Sample_Year")
@@ -34,8 +31,9 @@ public class iSNPsIdentity implements Serializable{
 	public iSNPsIdentity() {
 		
 	}
-
-	public iSNPsIdentity(String sampleYear, String sampleId, String locus, String allele) {
+	
+	public iSNPsIdentity(@NotNull @Size(max = 20) String sampleYear, @NotNull @Size(max = 20) String sampleId,
+			@NotNull @Size(max = 40) String locus, @NotNull @Size(max = 30) String allele) {
 		super();
 		this.sampleYear = sampleYear;
 		this.sampleId = sampleId;
@@ -74,24 +72,5 @@ public class iSNPsIdentity implements Serializable{
 	public void setAllele(String allele) {
 		this.allele = allele;
 	}
-
-	@Override
-	public boolean equals(Object o) {
-		if(this == o) return true;
-		if(o == null || this.getClass() != o.getClass()) return false; 
-		
-		//if object o isn't RazorIdentity
-		iSNPsIdentity that = (iSNPsIdentity) o;
-		
-		if(!this.sampleId.equals(that.sampleId)) {
-			return false;
-		}
-		if(!this.sampleYear.equals(that.sampleYear)) {
-			return false;
-		}
-		if(!this.allele.equals(that.allele)) {
-			return false;
-		}
-		return this.locus.equals(that.locus);
-	}
+	
 }
