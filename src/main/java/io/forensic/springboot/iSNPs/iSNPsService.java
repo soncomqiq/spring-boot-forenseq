@@ -18,6 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.forensic.springboot.forenseqY.ForenseqY;
+import io.forensic.springboot.forenseqY.ForenseqYIdentity;
+
 @Service
 public class iSNPsService {
 
@@ -195,5 +198,15 @@ public class iSNPsService {
 			e.printStackTrace();
 		}
 
+	}
+
+	public List<iSNPs> getForenseqById(String sid, String sy) {
+		List<Object[]> tmp = iSNPsRepository.findAllByID(sid, sy);
+		List<iSNPs> result = new ArrayList<iSNPs>();
+		for (int i = 0; i < tmp.size(); i++) {
+			result.add(new iSNPs(new iSNPsIdentity(sy, sid, tmp.get(i)[3].toString(), tmp.get(i)[4].toString()),
+					tmp.get(i)[5].toString(), tmp.get(i)[2].toString(), tmp.get(i)[6].toString()));
+		}
+		return result;
 	}
 }

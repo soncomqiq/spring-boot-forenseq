@@ -18,6 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.forensic.springboot.forenseqY.ForenseqY;
+import io.forensic.springboot.forenseqY.ForenseqYIdentity;
+
 @Service
 public class CEDataService {
 
@@ -288,5 +291,15 @@ public class CEDataService {
 
 	public void deletePerson(CEDataIdentity id) {
 		cEDataRepository.deleteById(id);
+	}
+
+	public List<CEData> getForenseqById(String sid, String sy) {
+		List<Object[]> tmp = cEDataRepository.findAllByID(sid, sy);
+		List<CEData> result = new ArrayList<CEData>();
+		for (int i = 0; i < tmp.size(); i++) {
+			result.add(new CEData(new CEDataIdentity(sy, sid, tmp.get(i)[2].toString(), tmp.get(i)[3].toString(),
+					tmp.get(i)[4].toString()), tmp.get(i)[5].toString()));
+		}
+		return result;
 	}
 }

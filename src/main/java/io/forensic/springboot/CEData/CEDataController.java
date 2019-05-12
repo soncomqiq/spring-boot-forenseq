@@ -9,9 +9,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.forensic.springboot.forenseqX.ForenseqX;
+
 @RestController
+@RequestMapping("/api/resources/cedata")
 public class CEDataController {
 	
 	@Autowired
@@ -49,5 +53,11 @@ public class CEDataController {
 	@RequestMapping(method=RequestMethod.DELETE, value="/cedata/{id}&&{sid}&&{locus}&&{genotype}&&{from}")
 	public void deleteTopic(@PathVariable String id,@PathVariable String sid,@PathVariable String locus,@PathVariable String genotype,@PathVariable String from) {
 		cEDataService.deletePerson(new CEDataIdentity(id,sid, locus, genotype, from));
+	}
+	
+	@RequestMapping(method = RequestMethod.GET, value = "/getByID")
+	public List<CEData> getforenseq(@RequestParam(value = "sampleID") String sid,
+			@RequestParam(value = "sampleYear") String sy) {
+		return cEDataService.getForenseqById(sid, sy);
 	}
 }

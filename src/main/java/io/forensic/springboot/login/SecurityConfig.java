@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/api/resources/getlocuslist", "/api/resources/getstatsgraphinfo/**/**",
 						"/api/resources/findpersonbylocus", "/api/file/**",
 						"/api/resources/getlocusautosomalkit/**", "/api/resources/getlocusxkit/**",
-						"/api/resources/getlocusykit/**")
+						"/api/resources/getlocusykit/**","/api/analysis/**")
 				.permitAll();
 
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()

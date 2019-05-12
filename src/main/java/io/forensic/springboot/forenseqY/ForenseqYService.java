@@ -18,6 +18,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.forensic.springboot.forenseqX.ForenseqX;
+import io.forensic.springboot.forenseqX.ForenseqXIdentity;
+
 @Service
 public class ForenseqYService {
 
@@ -199,5 +202,17 @@ public class ForenseqYService {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public List<ForenseqY> getForenseqById(String sid, String sy) {
+		List<Object[]> tmp = forenseqYRepository.findAllByID(sid, sy);
+		List<ForenseqY> result = new ArrayList<ForenseqY>();
+		for (int i = 0; i < tmp.size(); i++) {
+			result.add(new ForenseqY(
+					new ForenseqYIdentity(sy, sid, tmp.get(i)[3].toString(), tmp.get(i)[4].toString(),
+							tmp.get(i)[5].toString()),
+					tmp.get(i)[6].toString(), tmp.get(i)[2].toString(), tmp.get(i)[7].toString()));
+		}
+		return result;
 	}
 }

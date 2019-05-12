@@ -8,9 +8,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.forensic.springboot.forenseq.Forenseq;
+
 @RestController
+@RequestMapping("/api/resources/forenseqy")
 public class ForenseqYController {
 	
 	@Autowired
@@ -45,8 +49,9 @@ public class ForenseqYController {
 		forenseqYService.updateForenseq(id, forenseqY);
 	}
 	
-//	@RequestMapping(method=RequestMethod.DELETE, value="/forenseqy/sample_year={id}&&sample_id={sid}&&locus={locus}&&allele={allele}")
-//	public void deleteRazor(@PathVariable String id,@PathVariable String sid,@PathVariable String locus,@PathVariable String allele) {
-//		forenseqYService.deleteForenseq(new ForenseqYIdentity(id,sid,locus,allele));
-//	}
+	@RequestMapping(method = RequestMethod.GET, value = "/getByID")
+	public List<ForenseqY> getforenseq(@RequestParam(value = "sampleID") String sid,
+			@RequestParam(value = "sampleYear") String sy) {
+		return forenseqYService.getForenseqById(sid, sy);
+	}
 }

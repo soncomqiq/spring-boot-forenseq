@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import io.forensic.springboot.Other.OtherService;
+import io.forensic.springboot.person.PersonService;
 
 @RestController
 @RequestMapping("/api/file")
@@ -23,15 +24,18 @@ public class FileController {
     private OtherService otherService;
 
     @PostMapping("/uploadFile")
-    @CrossOrigin()
     public String uploadFile(@RequestParam("file") MultipartFile file) {
-//    	System.out.println("TEST1");
         fileStorageService.storeFile(file);
         return "success";
     }
     
+    @PostMapping("/uploadFileTxt")
+    public String uploadFileTxt(@RequestParam("file") MultipartFile file) {
+        fileStorageService.storeFileTxt(file);
+        return "success";
+    }
+    
     @PostMapping("/search/excelfile")
-    @CrossOrigin()
     public List<Object[]> searchByExcel(@RequestParam("file") MultipartFile file){
     	fileStorageService.storeFile(file);
     	return otherService.searchByExcelData("uploads/temp.xlsx");

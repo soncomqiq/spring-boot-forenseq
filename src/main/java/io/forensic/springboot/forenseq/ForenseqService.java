@@ -205,4 +205,16 @@ public class ForenseqService {
 		}
 
 	}
+
+	public List<Forenseq> getForenseqById(String sid, String sy) {
+		List<Object[]> tmp = forenseqRepository.findAllByID(sid, sy);
+		List<Forenseq> result = new ArrayList<Forenseq>();
+		for (int i = 0; i < tmp.size(); i++) {
+			result.add(new Forenseq(
+					new ForenseqIdentity(sy, sid, tmp.get(i)[3].toString(), tmp.get(i)[4].toString(),
+							tmp.get(i)[5].toString()),
+					tmp.get(i)[6].toString(), tmp.get(i)[2].toString(), tmp.get(i)[7].toString()));
+		}
+		return result;
+	}
 }
