@@ -18,9 +18,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.forensic.springboot.forenseqY.ForenseqY;
-import io.forensic.springboot.forenseqY.ForenseqYIdentity;
-
 @Service
 public class iSNPsService {
 

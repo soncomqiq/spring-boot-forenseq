@@ -169,7 +169,7 @@ public class ForenseqService {
 										.save(new Forenseq(
 												new ForenseqIdentity(sampleYear, sampleId, data.get(0), data.get(1),
 														data.get(3)),
-												data.get(2), locus.get(data.get(0)), data.get(4)));
+												data.get(2), locus.get(data.get(0)), data.get(4), ""));
 							}
 						}
 
@@ -209,12 +209,93 @@ public class ForenseqService {
 	public List<Forenseq> getForenseqById(String sid, String sy) {
 		List<Object[]> tmp = forenseqRepository.findAllByID(sid, sy);
 		List<Forenseq> result = new ArrayList<Forenseq>();
+		String sequenceAlignment;
 		for (int i = 0; i < tmp.size(); i++) {
+			System.out.println("SSSS");
+			System.out.println("tmp.get(i)[3].toString()::" + tmp.get(i)[3].toString());
+			System.out.println("tmp.get(i)[3].toString()::" + tmp.get(i)[4].toString());
+			String locus = tmp.get(i)[3].toString();
+			String allele = tmp.get(i)[4].toString();
+			sequenceAlignment = getAlignment(locus, allele, sid, sy);
 			result.add(new Forenseq(
 					new ForenseqIdentity(sy, sid, tmp.get(i)[3].toString(), tmp.get(i)[4].toString(),
 							tmp.get(i)[5].toString()),
-					tmp.get(i)[6].toString(), tmp.get(i)[2].toString(), tmp.get(i)[7].toString()));
+					tmp.get(i)[6].toString(), tmp.get(i)[2].toString(), tmp.get(i)[7].toString(), sequenceAlignment));
 		}
+		return result;
+	}
+	
+	public String getAlignment(String locus, String allele, String sampleId, String sampleYear) {
+		System.out.println("GOT IN");
+		Map<String, List<String>> Motif = new HashMap<String, List<String>>();
+		List<String> tmpMotif = forenseqRepository.findMotifLocus(locus);
+		Motif.put(locus, tmpMotif);
+		String tmp = forenseqRepository.findAllForenseqTable(locus, Float.parseFloat(allele), sampleId, sampleYear);
+		String result;
+
+			int array_iterate = 0;
+			int sequence_iterate = 0;
+			int count = 0;
+			int count_total = 0;
+			String seqAlignment = "";
+			String sequence = tmp;
+			System.out.println(sequence);
+			System.out.println(sequence.length());
+			while ((Motif.get(locus) != null) && (array_iterate < Motif.get(locus).size())
+					&& (sequence_iterate <= sequence.length())) {
+				System.out.println(seqAlignment);
+				System.out.println("array_iterate::" + array_iterate);
+				System.out.println("sequence_iterate" + sequence_iterate);
+				if (count_total == (int) Float.parseFloat(allele) || sequence_iterate >= sequence.length()) {
+					seqAlignment += "(" + Motif.get(locus).get(array_iterate).substring(1) + ")" + count + " ";
+					array_iterate += 1;
+					count_total += count;
+					count = 0;
+					System.out.println("FINAL PATH");
+					seqAlignment += sequence.substring(sequence_iterate);
+				} else {
+					if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("1")) {
+						try {
+							if (sequence
+									.substring(sequence_iterate,
+											sequence_iterate
+													+ Motif.get(locus).get(array_iterate).substring(1).length())
+									.equals(Motif.get(locus).get(array_iterate).substring(1))) {
+								count += 1;
+								count_total += 1;
+								sequence_iterate += Motif.get(locus).get(array_iterate).substring(1).length();
+							} else {
+								seqAlignment += "(" + Motif.get(locus).get(array_iterate).substring(1) + ")" + count
+										+ " ";
+								array_iterate += 1;
+								count = 0;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+					} else if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("2")) {
+//						System.out.println("Seq::"+sequence.length());
+//						System.out.println("seq_iterate::"+sequence_iterate);
+//						System.out.println("Motif"+ Motif.get(locus).get(array_iterate).substring(1).length());
+						try {
+							seqAlignment += sequence.substring(sequence_iterate,
+									sequence_iterate + Motif.get(locus).get(array_iterate).substring(1).length()) + " ";
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						sequence_iterate += Motif.get(locus).get(array_iterate).substring(1).length();
+						array_iterate += 1;
+					} else if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("3")) {
+						seqAlignment += "No Repeated Data";
+						break;
+					}
+				}
+			}
+			result = seqAlignment;
+
+		System.out.println("tmp::" + tmp);
+		System.out.println("Locus::" + locus);
+		System.out.println("Allele::" + allele);
 		return result;
 	}
 }

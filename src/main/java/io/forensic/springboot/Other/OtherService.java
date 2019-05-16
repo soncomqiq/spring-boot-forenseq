@@ -19,8 +19,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import io.forensic.springboot.CEData.CEData;
-import io.forensic.springboot.CEData.CEDataIdentity;
+import io.forensic.springboot.STRLocusInfo.STRLocusInfo;
+import io.forensic.springboot.STRLocusInfo.STRLocusInfoIdentity;
 import io.forensic.springboot.forenseq.Forenseq;
 import io.forensic.springboot.forenseq.ForenseqIdentity;
 import io.forensic.springboot.forenseqX.ForenseqX;
@@ -346,83 +346,8 @@ public class OtherService {
 
 	public List<Alignment> getAlignment(String locus, String allele) {
 		Map<String, List<String>> Motif = new HashMap<String, List<String>>();
-		// Autosomal
-		Motif.put("CSF1PO", Arrays.asList("1AGAT"));
-		Motif.put("D13S317", Arrays.asList("1TATC"));
-		Motif.put("D16S539", Arrays.asList("1GATA"));
-		Motif.put("D18S51", Arrays.asList("1AGAA"));
-		Motif.put("D21S11",
-				Arrays.asList("1TCTA", "1TCTG", "1TCTA", "2TA", "1TCTA", "2TCA", "1TCTA", "2TCCATA", "1TCTA"));
-		Motif.put("D3S1358", Arrays.asList("2TCTA", "1TCTG", "1TCTA"));
-		Motif.put("D5S818", Arrays.asList("1AGAT"));
-		Motif.put("D7S820", Arrays.asList("1GATA"));
-		Motif.put("D8S1179", Arrays.asList("1TCTA", "1TCTG", "1TCTA"));
-		Motif.put("FGA", Arrays.asList("1TTTC", "2TTTTTTCT", "1CTTT", "2CTCC", "1TTCC"));
-		Motif.put("TH01", Arrays.asList("1AATG"));
-		Motif.put("TPOX", Arrays.asList("1AATG"));
-		Motif.put("vWA", Arrays.asList("1TCTA", "1TCTG", "1TCTA", "2TCCA", "1TCTA"));
-		Motif.put("D2S1338", Arrays.asList("1TGCC", "1TTCC"));
-		Motif.put("D19S433", Arrays.asList("2AAGG", "2AAAG", "2AAGG", "2TAGG", "1AAGG"));
-		Motif.put("Penta D", Arrays.asList("1AAAGA"));
-		Motif.put("Penta E", Arrays.asList("1AAAGA"));
-		Motif.put("D10S1248", Arrays.asList("1GGAA"));
-		Motif.put("D1S1656", Arrays.asList("1TAGA", "1TAGG", "1TG"));
-		Motif.put("D12S391", Arrays.asList("1AGAT", "1AGAC", "2AGAT"));
-		Motif.put("D2S441", Arrays.asList("1TCTA"));
-		Motif.put("D22S1045", Arrays.asList("1ATT", "1ACT", "1ATT"));
-		Motif.put("SE33", Arrays.asList("1AAAG", "2AG", "1AAAG", "2AG", "1AAAG", "2G", "1AAAG", "2AG"));
-		Motif.put("D6S1043", Arrays.asList("1AGAT"));
-		Motif.put("D17S1301", Arrays.asList("3None"));
-		Motif.put("D20S482", Arrays.asList("3None"));
-		Motif.put("D4S2408", Arrays.asList("3None"));
-		Motif.put("D9S1122", Arrays.asList("3None"));
-		// Y_somal
-		Motif.put("DYS19", Arrays.asList("1TAGA"));
-		Motif.put("DYS385a-b", Arrays.asList("1GAAA"));
-		Motif.put("DYS389I", Arrays.asList("1TCTG", "1TCTA"));
-		Motif.put("DYF387S1", Arrays.asList("3None"));
-		Motif.put("DYS390", Arrays.asList("1TCTA", "1TCTG"));
-		Motif.put("DYS391", Arrays.asList("1TCTA"));
-		Motif.put("DYS392", Arrays.asList("1TAT"));
-		Motif.put("DYS393", Arrays.asList("1AGAT"));
-		Motif.put("DYS437", Arrays.asList("1TCTA"));
-		Motif.put("DYS438", Arrays.asList("1TTTTC"));
-		Motif.put("DYS439", Arrays.asList("1AGAT"));
-		Motif.put("DYS448", Arrays.asList("1AGAGAT"));
-		Motif.put("DYS449", Arrays.asList("3None"));
-		Motif.put("DYS456", Arrays.asList("1AGAT"));
-		Motif.put("DYS458", Arrays.asList("1GAAA"));
-		Motif.put("DYS460", Arrays.asList("1ATAG"));
-		Motif.put("DYS481", Arrays.asList("1CTT"));
-		Motif.put("DYS505", Arrays.asList("1TCCT"));
-		Motif.put("DYS518", Arrays.asList("3None"));
-		Motif.put("DYS522", Arrays.asList("1GATA"));
-		Motif.put("DYS533", Arrays.asList("1ATCT"));
-		Motif.put("DYS549", Arrays.asList("1GATA"));
-		Motif.put("DYS570", Arrays.asList("1TTTC"));
-		Motif.put("DYS576", Arrays.asList("1AAAG"));
-		Motif.put("DYS612", Arrays.asList("1CCT", "1CTT", "1TCT", "1CCT", "1TCT"));
-		Motif.put("DYS627", Arrays.asList("3None"));
-		Motif.put("DYS635", Arrays.asList("1TSTA"));
-		Motif.put("DYS643", Arrays.asList("1CTTTT"));
-		Motif.put("Y-GATA-H4", Arrays.asList("1TAGA"));
-		// X_Somal
-		Motif.put("DXS7132", Arrays.asList("1TCTA"));
-		Motif.put("DXS7423", Arrays.asList("1TCCA", "2TCTGTCCT", "1TCCA"));
-		Motif.put("DXS8378", Arrays.asList("1CTAT"));
-		Motif.put("DXS10074", Arrays.asList("1AAGA"));
-		Motif.put("DXS10079", Arrays.asList("1AGAG", "2TGAAAGAG", "1AGAA", "2AGAG", "1AGAA"));
-		Motif.put("DXS10101", Arrays.asList("1AAAG", "2GAAAGAAG", "1GAAA", "2A", "1GAAA", "2AAGA", "1AAAG", "2AAAAAGAA",
-				"1AAAG", "2AA"));
-		Motif.put("DXS10103", Arrays.asList("1TAGA", "2CTGA", "2CAGA", "1TAGA", "1CAGA", "2TAGA"));
-		Motif.put("DXS10134", Arrays.asList("1GAAA", "2GAGA", "1GAAA", "2AA", "2GAAA", "2GAGA", "1GAAA", "2GAGA",
-				"1GACAGA", "2GAAA", "2GTAA", "1GAAA", "2AAA", "1GAAA", "2AAA", "1GAAA"));
-		Motif.put("DXS10135", Arrays.asList("1AAGA", "2GAAAG", "1GAAA"));
-		Motif.put("DXS10146", Arrays.asList("1TTCC", "2T", "1TTCC", "2TTTC", "2CTCCCTTCC", "2TTCC", "2TCCC",
-				"2TTCTTCTTTC", "1TTCC", "2TTTCTT", "1CTTT", "2CTTC", "1CTTT", "2T", "1CTTT"));
-		Motif.put("DXS10148", Arrays.asList("1GGAA", "1AAGA", "1AAAG", "1AAGG"));
-		Motif.put("HPRTB", Arrays.asList("1AGAT"));
-
+		List<String> tmpMotif = repository.findMotifLocus(locus);
+		Motif.put(locus, tmpMotif);
 		List<Object[]> tmp = repository.findAllForenseqTable(locus, Float.parseFloat(allele));
 		List<Alignment> result = new ArrayList<Alignment>();
 
@@ -433,32 +358,52 @@ public class OtherService {
 			int count_total = 0;
 			String seqAlignment = "";
 			String sequence = tmp.get(i)[7].toString();
-			while (array_iterate < Motif.get(locus).size()) {
-				if (count_total == (int) Float.parseFloat(allele)) {
+			System.out.println(sequence);
+			System.out.println(sequence.length());
+			while ((Motif.get(locus) != null) && (array_iterate < Motif.get(locus).size())
+					&& (sequence_iterate <= sequence.length())) {
+				System.out.println(seqAlignment);
+				System.out.println("array_iterate::" + array_iterate);
+				System.out.println("sequence_iterate" + sequence_iterate);
+				if (count_total == (int) Float.parseFloat(allele) || sequence_iterate >= sequence.length()) {
 					seqAlignment += "(" + Motif.get(locus).get(array_iterate).substring(1) + ")" + count + " ";
 					array_iterate += 1;
 					count_total += count;
 					count = 0;
+					System.out.println("FINAL PATH");
 					seqAlignment += sequence.substring(sequence_iterate);
 				} else {
 					if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("1")) {
-						if (sequence
-								.substring(sequence_iterate,
-										sequence_iterate + Motif.get(locus).get(array_iterate).substring(1).length())
-								.equals(Motif.get(locus).get(array_iterate).substring(1))) {
-							count += 1;
-							count_total += 1;
-							sequence_iterate += Motif.get(locus).get(array_iterate).substring(1).length();
-						} else {
-							seqAlignment += "(" + Motif.get(locus).get(array_iterate).substring(1) + ")" + count + " ";
-							array_iterate += 1;
-							count = 0;
+						try {
+							if (sequence
+									.substring(sequence_iterate,
+											sequence_iterate
+													+ Motif.get(locus).get(array_iterate).substring(1).length())
+									.equals(Motif.get(locus).get(array_iterate).substring(1))) {
+								count += 1;
+								count_total += 1;
+								sequence_iterate += Motif.get(locus).get(array_iterate).substring(1).length();
+							} else {
+								seqAlignment += "(" + Motif.get(locus).get(array_iterate).substring(1) + ")" + count
+										+ " ";
+								array_iterate += 1;
+								count = 0;
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
 					} else if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("2")) {
-						seqAlignment += sequence.substring(sequence_iterate,
-								sequence_iterate + Motif.get(locus).get(array_iterate).substring(1).length()) + " ";
-						array_iterate += 1;
+//						System.out.println("Seq::"+sequence.length());
+//						System.out.println("seq_iterate::"+sequence_iterate);
+//						System.out.println("Motif"+ Motif.get(locus).get(array_iterate).substring(1).length());
+						try {
+							seqAlignment += sequence.substring(sequence_iterate,
+									sequence_iterate + Motif.get(locus).get(array_iterate).substring(1).length()) + " ";
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
 						sequence_iterate += Motif.get(locus).get(array_iterate).substring(1).length();
+						array_iterate += 1;
 					} else if (Motif.get(locus).get(array_iterate).substring(0, 1).equals("3")) {
 						seqAlignment += "No Repeated Data";
 						break;
@@ -502,12 +447,12 @@ public class OtherService {
 		Map<String, String> mapColor = new HashMap<String, String>();
 		// Add Colors
 		color.add("rgba(255,87,34,0.8)");
-		color.add("rgba(255,0,0,0.8)");
 		color.add("rgba(255,255,0,0.8)");
 		color.add("rgba(255,0,255,0.8)");
 		color.add("rgba(0,0,255,0.8)");
 		color.add("rgba(0,255,0,0.8)");
 		color.add("rgba(128,0,128,0.8)");
+		color.add("rgba(255,0,0,0.8)");
 		color.add("rgba(0,255,255,0.8)");
 		color.add("rgba(128,128,0,0.8)");
 		color.add("rgba(0,0,128,0.8)");

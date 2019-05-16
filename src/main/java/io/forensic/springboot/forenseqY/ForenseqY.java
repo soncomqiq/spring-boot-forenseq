@@ -22,21 +22,32 @@ public class ForenseqY {
 
 	@Column(name = "Sequence")
 	private String sequence;
+	
+	private String alignment;
 
 	public ForenseqY() {
 
 	}
 
-	public ForenseqY(ForenseqYIdentity forenseqYIdentity, String type, String genotype, String sequence) {
+	public ForenseqY(ForenseqYIdentity forenseqYIdentity, String type, String genotype, String sequence, String alignment) {
 		super();
 		this.forenseqYIdentity = forenseqYIdentity;
 		this.type = type;
 		this.genotype = genotype;
 		this.sequence = sequence;
+		this.alignment = alignment;
 	}
 
 	public ForenseqYIdentity getForenseqIdentity() {
 		return forenseqYIdentity;
+	}
+
+	public String getAlignment() {
+		return alignment;
+	}
+
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
 	}
 
 	public void setForenseqIdentity(ForenseqYIdentity forenseqYIdentity) {

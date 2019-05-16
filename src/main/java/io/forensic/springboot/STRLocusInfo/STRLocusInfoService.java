@@ -1,6 +1,8 @@
-package io.forensic.springboot.CEData;
+package io.forensic.springboot.STRLocusInfo;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Scanner;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -16,34 +19,63 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import io.forensic.springboot.forenseqY.ForenseqY;
-import io.forensic.springboot.forenseqY.ForenseqYIdentity;
-
 @Service
-public class CEDataService {
+public class STRLocusInfoService {
 
 	@Autowired
-	private CEDataRepository cEDataRepository;
+	private STRLocusInfoRepository sTRLocusInfoRepository;
 
-	public List<CEData> getAllTopics() {
+	public List<STRLocusInfo> getAllTopics() {
 		// return topics;
-		List<CEData> cEDatas = new ArrayList<>();
-		cEDataRepository.findAll().forEach(cEDatas::add);
-		return cEDatas;
+		List<STRLocusInfo> sTRLocusInfos = new ArrayList<>();
+		sTRLocusInfoRepository.findAll().forEach(sTRLocusInfos::add);
+		return sTRLocusInfos;
 	}
 
-	public Optional<CEData> getPerson(CEDataIdentity id) {
-		return cEDataRepository.findById(id);
+	public Optional<STRLocusInfo> getPerson(STRLocusInfoIdentity id) {
+		return sTRLocusInfoRepository.findById(id);
 	}
 
-	public void addPerson(CEData cEData) {
-		cEDataRepository.save(cEData);
+	public void addPerson(STRLocusInfo sTRLocusInfo) {
+		sTRLocusInfoRepository.save(sTRLocusInfo);
 	}
 
-	public void updatePerson(String id, CEData cEData) {
-		cEDataRepository.save(cEData);
+	public void updatePerson(String id, STRLocusInfo sTRLocusInfo) {
+		sTRLocusInfoRepository.save(sTRLocusInfo);
+	}
+
+	public String readTextData(String fileName) throws FileNotFoundException {
+		File file = new File(fileName);
+		Scanner sc = new Scanner(file);
+		int line = 1;
+		String sampleId = null, sampleYear = null;
+		while (sc.hasNextLine()) {
+			if (line == 1) {
+				sampleYear = sc.nextLine();
+			}
+			if (line == 2) {
+				sampleId = sc.nextLine();
+				List<String> tmp = sTRLocusInfoRepository.findExistByID(sampleId, sampleYear);
+				if (tmp.size() == 0) {
+					sc.close();
+					return "Please Enter PersonID first.";
+				}
+			}
+			if (line > 2) {
+				String[] tmp = sc.nextLine().split(",");
+				System.out.println("Save");
+				sTRLocusInfoRepository.save(new STRLocusInfo(
+						new STRLocusInfoIdentity(sampleYear, sampleId, tmp[0], tmp[1] + "," + tmp[2], "CE_Data"),
+						"Autosomal", "N/A"));
+			}
+			line++;
+		}
+		sc.close();
+		return "Success";
 	}
 
 	public void readExcelData(String fileName) {
@@ -132,9 +164,11 @@ public class CEDataService {
 //							System.out.println("data.get(1)::"+data.get(1));
 //							System.out.println("sample_year::"+sampleYear);
 //							System.out.println("sample_id::"+sampleId);
-							cEDataRepository.save(new CEData(
-									new CEDataIdentity(sampleYear, sampleId, data.get(0), data.get(1), "Forenseq"),
-									"Autosomal"));
+							sTRLocusInfoRepository
+									.save(new STRLocusInfo(
+											new STRLocusInfoIdentity(sampleYear, sampleId, data.get(0), data.get(1),
+													"Forenseq"),
+											"Autosomal", (data.get(2).equals("")) ? "Good" : data.get(2)));
 //							System.out.println("Print4");
 						}
 
@@ -179,9 +213,9 @@ public class CEDataService {
 //							System.out.println("data.get(1)::" + data.get(1));
 //							System.out.println("locus.size()::" + locus.size());
 //							System.out.println("PUTED DATA-0 DATA-1");
-							cEDataRepository.save(new CEData(
-									new CEDataIdentity(sampleYear, sampleId, data.get(0), data.get(1), "Forenseq"),
-									"Y"));
+							sTRLocusInfoRepository.save(new STRLocusInfo(new STRLocusInfoIdentity(sampleYear, sampleId,
+									data.get(0), data.get(1), "Forenseq"), "Y",
+									(data.get(2).equals("")) ? "Good" : data.get(2)));
 						}
 
 						line += 1; // Counting Line (Add 1/Loop)
@@ -224,9 +258,9 @@ public class CEDataService {
 //							System.out.println("data.get(1)::" + data.get(1));
 //							System.out.println("locus.size()::" + locus.size());
 //							System.out.println("PUTED DATA-0 DATA-1");
-							cEDataRepository.save(new CEData(
-									new CEDataIdentity(sampleYear, sampleId, data.get(0), data.get(1), "Forenseq"),
-									"X"));
+							sTRLocusInfoRepository.save(new STRLocusInfo(new STRLocusInfoIdentity(sampleYear, sampleId,
+									data.get(0), data.get(1), "Forenseq"), "X",
+									(data.get(2).equals("")) ? "Good" : data.get(2)));
 						}
 
 						line += 1; // Counting Line (Add 1/Loop)
@@ -269,9 +303,11 @@ public class CEDataService {
 //							System.out.println("data.get(1)::" + data.get(1));
 //							System.out.println("locus.size()::" + locus.size());
 //							System.out.println("PUTED DATA-0 DATA-1");
-							cEDataRepository.save(new CEData(
-									new CEDataIdentity(sampleYear, sampleId, data.get(0), data.get(1), "Forenseq"),
-									"iSNPs"));
+							sTRLocusInfoRepository
+									.save(new STRLocusInfo(
+											new STRLocusInfoIdentity(sampleYear, sampleId, data.get(0), data.get(1),
+													"Forenseq"),
+											"iSNPs", (data.get(2).equals("")) ? "Good" : data.get(2)));
 						}
 
 						line += 1; // Counting Line (Add 1/Loop)
@@ -289,16 +325,18 @@ public class CEDataService {
 
 	}
 
-	public void deletePerson(CEDataIdentity id) {
-		cEDataRepository.deleteById(id);
+	public void deletePerson(STRLocusInfoIdentity id) {
+		sTRLocusInfoRepository.deleteById(id);
 	}
 
-	public List<CEData> getForenseqById(String sid, String sy) {
-		List<Object[]> tmp = cEDataRepository.findAllByID(sid, sy);
-		List<CEData> result = new ArrayList<CEData>();
+	public List<STRLocusInfo> getForenseqById(String sid, String sy) {
+		List<Object[]> tmp = sTRLocusInfoRepository.findAllByID(sid, sy);
+		List<STRLocusInfo> result = new ArrayList<STRLocusInfo>();
 		for (int i = 0; i < tmp.size(); i++) {
-			result.add(new CEData(new CEDataIdentity(sy, sid, tmp.get(i)[2].toString(), tmp.get(i)[3].toString(),
-					tmp.get(i)[4].toString()), tmp.get(i)[5].toString()));
+			result.add(new STRLocusInfo(
+					new STRLocusInfoIdentity(sy, sid, tmp.get(i)[2].toString(), tmp.get(i)[3].toString(),
+							tmp.get(i)[4].toString()),
+					tmp.get(i)[5].toString(), (tmp.get(i)[6]) != null ? tmp.get(i)[6].toString() : "N/A"));
 		}
 		return result;
 	}

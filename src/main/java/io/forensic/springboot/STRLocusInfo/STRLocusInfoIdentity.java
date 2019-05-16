@@ -1,4 +1,4 @@
-package io.forensic.springboot.CEData;
+package io.forensic.springboot.STRLocusInfo;
 
 import java.io.Serializable;
 
@@ -9,7 +9,7 @@ import javax.validation.constraints.Size;
 
 //Implementing Serializable for using this class as a key
 @Embeddable
-public class CEDataIdentity implements Serializable{
+public class STRLocusInfoIdentity implements Serializable{
 
 	/**
 	 * 
@@ -40,11 +40,11 @@ public class CEDataIdentity implements Serializable{
 	@Column(name = "froms")
 	private String from;
 	
-	public CEDataIdentity() {
+	public STRLocusInfoIdentity() {
 		
 	}
 
-	public CEDataIdentity(String sampleYear, String sampleId, String locus, String genotype, String from) {
+	public STRLocusInfoIdentity(String sampleYear, String sampleId, String locus, String genotype, String from) {
 		super();
 		this.sampleYear = sampleYear;
 		this.sampleId = sampleId;
@@ -99,7 +99,7 @@ public class CEDataIdentity implements Serializable{
 		if(o == null || this.getClass() != o.getClass()) return false; 
 		
 		//if object o isn't RazorIdentity
-		CEDataIdentity that = (CEDataIdentity) o;
+		STRLocusInfoIdentity that = (STRLocusInfoIdentity) o;
 		
 		if(!this.sampleId.equals(that.sampleId)) {
 			return false;

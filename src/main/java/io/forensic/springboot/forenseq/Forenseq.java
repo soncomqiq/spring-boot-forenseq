@@ -22,17 +22,20 @@ public class Forenseq {
 
 	@Column(name = "Sequence")
 	private String sequence;
+	
+	private String alignment;
 
 	public Forenseq() {
 
 	}
 
-	public Forenseq(ForenseqIdentity forenseqIdentity, String type, String genotype, String sequence) {
+	public Forenseq(ForenseqIdentity forenseqIdentity, String type, String genotype, String sequence, String alignment) {
 		super();
 		this.forenseqIdentity = forenseqIdentity;
 		this.type = type;
 		this.genotype = genotype;
 		this.sequence = sequence;
+		this.alignment = alignment;
 	}
 
 	public ForenseqIdentity getForenseqIdentity() {
@@ -41,6 +44,14 @@ public class Forenseq {
 
 	public void setForenseqIdentity(ForenseqIdentity forenseqIdentity) {
 		this.forenseqIdentity = forenseqIdentity;
+	}
+
+	public String getAlignment() {
+		return alignment;
+	}
+
+	public void setAlignment(String alignment) {
+		this.alignment = alignment;
 	}
 
 	public String getType() {
