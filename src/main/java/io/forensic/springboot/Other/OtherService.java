@@ -76,8 +76,6 @@ public class OtherService {
 
 			// Get the number of sheets in the xlsx file
 			int numberOfSheets = workbook.getNumberOfSheets();
-			String sampleYear = null; // Collect sample_year
-			String sampleId = null; // Collect sample_id
 			// loop through each of the sheets
 			for (int i = 0; i < numberOfSheets; i++) {
 
@@ -117,10 +115,9 @@ public class OtherService {
 							} // end of cell iterator
 							if (data.get(0).equals("Created")) {
 								String[] tmp = data.get(1).split(" ");
-								sampleYear = tmp[2];
 							}
 							if (data.get(0).equals("Sample")) {
-								sampleId = data.get(1);
+								data.get(1);
 							}
 						}
 
@@ -173,7 +170,7 @@ public class OtherService {
 						Row row = rowIterator.next();
 						// Every row has columns, get the column iterator and iterate over them
 						Iterator<Cell> cellIterator = row.cellIterator();
-						Map<String, String> locus = new HashMap<String, String>();
+						new HashMap<String, String>();
 
 						// Line 13 to 36 Collect CE_Data of iSNPs
 						if (line >= 13 && line <= 36) {
@@ -222,7 +219,7 @@ public class OtherService {
 						Row row = rowIterator.next();
 						// Every row has columns, get the column iterator and iterate over them
 						Iterator<Cell> cellIterator = row.cellIterator();
-						Map<String, String> locus = new HashMap<String, String>();
+						new HashMap<String, String>();
 
 						// Line 13 to 36 Collect CE_Data of iSNPs
 						if (line >= 13 && line <= 19) {

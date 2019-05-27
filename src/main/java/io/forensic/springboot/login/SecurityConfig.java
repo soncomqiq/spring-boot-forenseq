@@ -57,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/api/resources/getlocuslist", "/api/resources/getstatsgraphinfo/**/**",
 						"/api/resources/findpersonbylocus", "/api/file/**",
 						"/api/resources/getlocusautosomalkit/**", "/api/resources/getlocusxkit/**",
-						"/api/resources/getlocusykit/**","/api/analysis/**")
+						"/api/resources/getlocusykit/**","/api/analysis/**","/api/resources/statisticmap/**")
 				.permitAll();
 
 		http.cors().and().csrf().disable().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
@@ -70,6 +70,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// Add our custom JWT security filter
 		http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
-
 	}
 }

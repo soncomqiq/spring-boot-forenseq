@@ -24,13 +24,11 @@ public class OtherController {
 	}
 	
 	@RequestMapping("/getlocusautosomalkit/{kit}")
-	@CrossOrigin()
 	public List<String> getLocusAutosomalKit(@PathVariable String kit) {
 		return service.getLocusAutosomalKit(kit);
 	}
 	
 	@RequestMapping("/statisticmap/{allele}")
-	@CrossOrigin()
 	public List<MapStats> getStatisticMap(@PathVariable String allele) {
 		return service.getStatisticMap(allele);
 	}
