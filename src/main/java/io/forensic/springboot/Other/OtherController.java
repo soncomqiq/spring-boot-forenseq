@@ -96,6 +96,12 @@ public class OtherController {
 		return service.getPersonByLocus(locus);
 	}
 	
+	@RequestMapping(value = "/findNumberOfPersonByLocus", method = RequestMethod.POST)
+	@CrossOrigin()
+	public int getNumberOfPersonByLocus(@RequestBody List<RequestLocus> locus) {
+		return service.getPersonByLocus(locus).size();
+	}
+	
 	@RequestMapping(value = "/alignment", method = RequestMethod.POST)
 	@CrossOrigin()
 	public List<Alignment> getAligenment(@RequestBody RequestLocus body) {

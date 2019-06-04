@@ -65,7 +65,7 @@ public interface OtherRepository extends CrudRepository<Person, String>, OtherRe
 	public String findAllForenseqTable(@Param("locus") String locus, @Param("allele") float allele,
 			@Param("sampleId") String sampleId, @Param("sampleYear") String sampleYear);
 
-	@Query(value = "SELECT Locus, Allele, COUNT(*) AS Amount FROM isnpdata GROUP BY Locus, Genotype ORDER BY Locus;", nativeQuery = true)
+	@Query(value = "SELECT isd.Locus, isd.Allele, COUNT(*) AS Amount FROM isnpdata isd GROUP BY isd.Locus, isd.Genotype ORDER BY isd.Locus;", nativeQuery = true)
 	public List<Object[]> findISNPStat();
 
 	@Query(value = "(SELECT DISTINCT Locus , Allele FROM Forenseq ORDER BY Locus) UNION (SELECT DISTINCT Locus , Allele FROM ForenseqX ORDER BY Locus) UNION (SELECT DISTINCT Locus , Allele FROM ForenseqY ORDER BY Locus)", nativeQuery = true)

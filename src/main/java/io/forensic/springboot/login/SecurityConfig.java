@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/", "/api/resources/person/numberofperson", "/logout", "/api/resources/getallxkit",
 						"/api/resources/getallykit", "/api/resources/getallautosomalkit", "/api/resources/hetero",
 						"/api/resources/getlocuslist", "/api/resources/getstatsgraphinfo/**/**",
-						"/api/resources/findpersonbylocus", "/api/file/**",
+						"/api/resources/findNumberOfPersonByLocus", "/api/file/**",
 						"/api/resources/getlocusautosomalkit/**", "/api/resources/getlocusxkit/**",
 						"/api/resources/getlocusykit/**","/api/analysis/**","/api/resources/statisticmap/**")
 				.permitAll();
