@@ -1,5 +1,7 @@
 package io.forensic.springboot.Analysis;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +28,10 @@ public class KinshipResult {
 
 	public String getString() {
 		calPostProb();
-		String string = "Post.prob = " + postProb + "\n";
+		Double truncatedDouble = BigDecimal.valueOf(postProb)
+			    .setScale(4, RoundingMode.HALF_UP)
+			    .doubleValue();
+		String string = "Post.prob = " + truncatedDouble + "\n";
 		if (postProb.compareTo(99.0) > 0) {
 			return string + getCase1String();
 		} else if (postProb.compareTo(0.1) <= 0) {
@@ -37,9 +42,9 @@ public class KinshipResult {
 	}
 
 	private String getCase1String() {
-		return parent + " ไม่ถูกคัดออกจากการเป็นพ่อ-แม่ของ " + child + "\n" + "โดยความเชื่อมั่นที่" + parent
-				+ "เป็นพ่อ-แม่ของ" + child + "เท่ากับ" + postProb
-				+ "เมื่อคํานวณจากฐานข้อมูลประชากรไทย โดยสันนิษฐานค่า prior probability = 0.5";
+		return parent + " ไม่ถูกคัดออกจากการเป็นพ่อ-แม่ของ " + child + "\n" + " โดยความเชื่อมั่นที่ " + parent
+				+ " เป็นพ่อ-แม่ของ " + child + " เท่ากับ " + postProb
+				+ " เมื่อคํานวณจากฐานข้อมูลประชากรไทย โดยสันนิษฐานค่า prior probability = 0.5";
 	}
 
 	private String getCase2String() {
@@ -49,8 +54,8 @@ public class KinshipResult {
 				temp.add(e.getKey());
 			}
 		}
-		String str = parent + "ไมใช่พ่อแม่ของ" + child + "โดยมีตำแหน่งที่เข้ากันไม่ได้ " + temp.size()
-				+ "ตำแหน่ง ได้แก่ ";
+		String str = parent + " ไมใช่พ่อแม่ของ " + child + " โดยมีตำแหน่งที่เข้ากันไม่ได้  " + temp.size()
+				+ " ตำแหน่ง ได้แก่  ";
 		for (String s : temp) {
 			str = str + s + " ";
 		}
@@ -58,7 +63,7 @@ public class KinshipResult {
 	}
 
 	private String getCase3String() {
-		return "ไม่สามารถสรุปได้ว่า " + parent + " เป็นพ่อแม่ของ " + child + " หรือไม่";
+		return "ไม่สามารถสรุปได้ว่า  " + parent + " เป็นพ่อแม่ของ " + child + " หรือไม่";
 	}
 
 	private void calLR() {

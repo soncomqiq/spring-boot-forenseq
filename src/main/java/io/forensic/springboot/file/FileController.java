@@ -38,14 +38,13 @@ public class FileController {
     @PostMapping("/search/excelfile")
     public List<Object[]> searchByExcel(@RequestParam("file") MultipartFile file){
     	fileStorageService.storeFile(file);
+    	System.out.println("Middle");
+    	try {
+			Thread.sleep(1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	return otherService.searchByExcelData("uploads/temp.xlsx");
     }
-
-//    @PostMapping("/uploadMultipleFiles")
-//    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-//        return Arrays.asList(files)
-//                .stream()
-//                .map(file -> uploadFile(file))
-//                .collect(Collectors.toList());
-//    }
 }
