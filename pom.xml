@@ -14,8 +14,8 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>The-Real-API</name>
 	<description>forenseq API Data project for Spring Boot</description>
-
 	<properties>
+   		<start-class>io.chula.The-Real-API</start-class>
 		<java.version>1.8</java.version>
 	</properties>
 
